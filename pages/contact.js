@@ -14,6 +14,7 @@ const officeLocations = [
   }
 ];
 
+
 const inquiryTypes = [
   { id: 'general', name: 'General Inquiry' },
   { id: 'consultation', name: 'Request a Consultation' },
@@ -41,17 +42,73 @@ export default function Contact() {
   
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phoneRegex = /^[0-9\s-()+]+$/;
+  const nameRegex = /^[A-Za-z\s'-]+$/;
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
+    let formattedValue = value.trim();
+
+    // Validate phone number (allow digits, spaces, dashes, and parentheses)
+    if (name === 'phone' && !phoneRegex.test(formattedValue) && formattedValue !== '') {
+      return;
+    }
+
+    // Ensure first and last name only contain letters and spaces
+    if ((name === 'firstName' || name === 'lastName') && !nameRegex.test(formattedValue) && formattedValue !== '') {
+      return;
+    }
+
+    setFormData((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: formattedValue
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    if (!emailRegex.test(formData.email)) {
+      setFormStatus({
+        submitted: true,
+        error: true,
+        message: 'Invalid email address format. Please enter a valid email.'
+      });
+      setIsSubmitting(false); // ✅ Fix: Reset submit state
+      return;
+    }
+    
+    if (formData.phone && !phoneRegex.test(formData.phone)) {
+      setFormStatus({
+        submitted: true,
+        error: true,
+        message: 'Invalid phone number format. Only digits, spaces, and dashes are allowed.'
+      });
+      setIsSubmitting(false); // ✅ Fix: Reset submit state
+      return;
+    }
+    
+    if (!nameRegex.test(formData.firstName) || !nameRegex.test(formData.lastName)) {
+      setFormStatus({
+        submitted: true,
+        error: true,
+        message: 'Names can only contain letters, spaces, and apostrophes.'
+      });
+      setIsSubmitting(false); // ✅ Fix: Reset submit state
+      return;
+    }
+
+    if (!formData.message.trim()) {
+      setFormStatus({
+        submitted: true,
+        error: true,
+        message: 'Message cannot be empty.'
+      });
+      setIsSubmitting(false); // ✅ Fix: Reset submit state
+      return;
+    }
     
     try {
       const response = await fetch('/api/submit-consultation', {
@@ -94,6 +151,7 @@ export default function Contact() {
       setIsSubmitting(false);
     }
   };
+
 
   return (
     <Layout title="Contact Us">
@@ -196,6 +254,7 @@ export default function Contact() {
                         autoComplete="given-name"
                         className="py-3 px-4 block w-full shadow-sm focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"
                         required
+                        maxLength='50'
                       />
                     </div>
                   </div>
@@ -211,6 +270,7 @@ export default function Contact() {
                         value={formData.lastName}
                         onChange={handleChange}
                         autoComplete="family-name"
+                        maxLength='50'
                         className="py-3 px-4 block w-full shadow-sm focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"
                         required
                       />
@@ -228,6 +288,7 @@ export default function Contact() {
                         value={formData.email}
                         onChange={handleChange}
                         autoComplete="email"
+                        maxLength='100'
                         className="py-3 px-4 block w-full shadow-sm focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"
                         required
                       />
@@ -245,6 +306,7 @@ export default function Contact() {
                         value={formData.phone}
                         onChange={handleChange}
                         autoComplete="tel"
+                        maxLength='20'
                         className="py-3 px-4 block w-full shadow-sm focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"
                       />
                     </div>
@@ -261,6 +323,7 @@ export default function Contact() {
                         value={formData.company}
                         onChange={handleChange}
                         autoComplete="organization"
+                        maxLength='100'
                         className="py-3 px-4 block w-full shadow-sm focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"
                       />
                     </div>

@@ -1,3 +1,6 @@
+import Link from 'next/link';
+import { ChevronDownIcon } from '@heroicons/react/24/solid';
+
 function DropdownNavLink({ label, links }) {
     const [isOpen, setIsOpen] = useState(false);
     
