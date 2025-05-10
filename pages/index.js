@@ -52,7 +52,7 @@ export default function Home() {
       <div className="relative bg-gray-900">
         <div className="absolute inset-0">
           <Image 
-            src="/images/das/outdoor/outdoor-wireless.jpg" 
+            src="/images/das/outdoor/sports-venue.jpg" 
             alt="High-tech wireless installation" 
             layout="fill" 
             objectFit="cover" 

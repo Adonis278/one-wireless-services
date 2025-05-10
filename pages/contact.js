@@ -192,7 +192,7 @@ export default function Contact() {
                     <PhoneIcon className="h-6 w-6 text-blue-600" aria-hidden="true" />
                   </div>
                   <div className="ml-3 text-base text-gray-500">
-                    <p>+1 (800) 000-0000</p>
+                    <p>+1-704-421-0116</p>
                     <p className="mt-1">Mon-Fri 8am to 5pm PT</p>
                   </div>
                 </div>
@@ -201,8 +201,8 @@ export default function Contact() {
                     <EnvelopeIcon className="h-6 w-6 text-blue-600" aria-hidden="true" />
                   </div>
                   <div className="ml-3 text-base text-gray-500">
-                    <p>info@onewirelesssolutions.com</p>
-                    <p className="mt-1">Support: support@onewirelesssolutions.com</p>
+                    <p>sales@onewirelessservices.com</p>
+                    <p className="mt-1">Support: sales@onewirelessservices.com</p>
                   </div>
                 </div>
               </div>

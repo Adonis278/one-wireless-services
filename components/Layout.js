@@ -69,7 +69,7 @@ export default function Layout({ children, title }) {
             {/* Logo and tagline - stacks nicely on mobile */}
             <div className="flex items-center mb-2 sm:mb-0">
               <Link href="/" className="flex-shrink-0">
-                <img className="h-10 w-auto" src="/ows-logo.jpg" alt="One Wireless Solutions Logo" />
+                <img className="h-20 w-auto" src="/ows-logo-small.png" alt="One Wireless Solutions Logo" />
               </Link>
               <p className="ml-4 text-sm text-gray-600 hidden sm:block">One Wireless Services</p>
             </div>
